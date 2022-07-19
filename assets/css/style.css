@@ -6,11 +6,17 @@
     text-align: center;
     color: white;
     background-color: grey;
-    padding: 1rem;
+    padding-top: 0.5rem;
 }
 
 .side-bar {
     padding: 0 2rem;
+}
+
+#recent-searches {
+    margin-top: 1rem;
+    border-top: 1px black;
+    border-top-style: solid;
 }
 
 textarea {
@@ -24,9 +30,8 @@ button {
     border-style: none;
     color: #fff;
     cursor: pointer;
-    padding: 6px 107px;
+    padding: 6px 129px;
     text-align: center;
-    transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
 }
 
 button {
