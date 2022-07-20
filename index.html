@@ -20,6 +20,7 @@
     <div class="container-fluid">
 
       <div class="row p-2">
+
         <div class="side-bar col-auto">
           <div class="row">
             <h3>Search for a city: </h3>
@@ -28,20 +29,37 @@
             <input size="30" id="city-search"></input>
           </div>
           <div class="row pt-2">
-            <button id="city-button">Search</button>
+            <button id="search-button">Search</button>
           </div>
-          <div class="row" id="recent-searches">
+          <div class="row">
+            <div class="col" id="recent-searches">
+            </div>
           </div>
         </div>
 
         <div class="col border p-3">
-          <h4 id="city-name">City Name </h4>
-          <img id="title-image" src="">
-          <p id="temp">Temp: </p>
-          <p id="wind">Wind: </p>
-          <p id="humidity">Humidity: </p>
-          <p id="uv-index">UV Index: </p>
+          <div class="row pl-3">
+            <h4 id="city-name">City Name </h4>
+            <img id="title-image" src="">
+          </div>
+          <div class="row pl-3">
+            <p id="temp">Temp: </p>
+          </div>
+          <div class="row pl-3">
+            <p id="wind">Wind: </p>
+          </div>
+          <div class="row pl-3">
+            <p id="humidity">Humidity: </p>
+          </div>
+          <div class="row pl-3">
+            <p id="uv-index">UV Index: </p>
+          </div>
         </div>
+
+      </div>
+      <div class="row">
+        <div class="col-auto" id="below-search"></div>
+        <div class="col" id="below-current-weather"></div>
       </div>
     </div>
 

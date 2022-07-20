@@ -1,7 +1,7 @@
 // Defining constant variables
 const OPEN_WEATHER_API_KEY = "49160125f6ab2cf7e612c72cdd9d0e00";
 const CITY_SEARCH_TEXT_AREA = document.querySelector("#city-search");
-const CITY_SEARCH_BUTTON = document.querySelector("#city-button");
+const CITY_SEARCH_BUTTON = document.querySelector("#search-button");
 const CITY_NAME = document.querySelector("#city-name");
 const CITY_ICON = document.querySelector("#title-image");
 const TEMP = document.querySelector("#temp");
@@ -47,11 +47,11 @@ function fetchLatLon(city) {
         .then(function (data){
             var lat = data.coord.lat;
             var long = data.coord.lon;
-            var icon = ("http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
             var date = M.format("M[/]D[/]YYYY");
+            var icon = ("http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
             CITY_NAME.textContent = (data.name + " (" + date + ")");
             CITY_ICON.src = (icon);
             fetchWeather(lat, long);
-            console.log(data);
+            // console.log(data);
         })
 }
