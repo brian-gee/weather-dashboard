@@ -19,6 +19,10 @@
     border-top-style: solid;
 }
 
+img {
+    max-width: 5%;
+}
+
 textarea {
     resize: none;
 }
