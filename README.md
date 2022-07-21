@@ -4,4 +4,4 @@ Weather dashboard that you can use to lookup a city and find up to date informat
 
 Live Demo - https://brian-gee.github.io/weather-dashboard/
 
-![pic-selected-220721-1525-57](https://user-images.githubusercontent.com/39035211/180299826-e4a9e8a4-b13c-48b4-99e8-f2b54216a415.png)
+![Weather-Dashboard](https://user-images.githubusercontent.com/39035211/180304433-c6c539e8-b409-49fb-a367-fde248712cc0.png)
