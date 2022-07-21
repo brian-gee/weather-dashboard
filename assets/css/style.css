@@ -2,6 +2,7 @@
     font-family: monospace;
 }
 
+/* Title formatting */
 .hero {
     text-align: center;
     color: white;
@@ -9,6 +10,7 @@
     padding-top: 0.5rem;
 }
 
+/* Side bar search formatting */
 .side-bar {
     padding: 0 2rem;
     -ms-flex: 0 0 230px;
@@ -21,10 +23,7 @@
     border-top-style: solid;
 }
 
-#below-search{
-    margin-right: 20rem;
-}
-
+/* Formatting for main weather info display */
 #title-img {
     width: 40px;
     background-color: grey;
@@ -35,6 +34,7 @@
     display: none;
 }
 
+/* Formatting for buttons */
 #search-button {
     align-items: center;
     background-color: #0276FF;
@@ -68,6 +68,7 @@
     background-color: rgba(128, 128, 128, 0.9);
 }
 
+/* 5-Day Forecast formatting */
 .five-day-item {
     margin-bottom: 1rem;
     margin-left: 1rem;

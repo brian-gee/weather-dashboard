@@ -24,16 +24,18 @@ CITY_SEARCH_INPUT.addEventListener("keyup", (e) => {
 
 // Get json response from onecallapi
 function fetchWeather(lat, lon) {
-    // Remove existing 5-Day Forecast
+    // Remove existing 5-Day Forecast if it exists
     if (FIVE_DAY_CONTAINER.children.length > 0) {
         removeChildren(FIVE_DAY_CONTAINER);
     }
     var queryURL = "https://api.openweathermap.org/data/2.5/onecall?units=imperial&exclude=hourly,minutely&lat=" + lat + "&lon=" + lon + "&appid=" + OPEN_WEATHER_API_KEY;
+    // Get openweatherapi onecall data
     fetch(queryURL)
         .then(function (response) {
           return response.json();
         })
         .then(function (data){
+            // Display fetched info to their appropriate element
             TEMP.textContent = ("Temp: " + data.current.temp + "°F");
             WIND.textContent = ("Wind: " + data.current.wind_speed + " MPH");
             HUMIDITY.textContent = ("Humidity: " + data.current.humidity + "%")
@@ -52,48 +54,63 @@ function fetchWeather(lat, lon) {
                     (day.humidity + "%"));
             }
         })
-};
+}
 
 // Get the cities lat and lon to use with onecallapi
 function fetchLatLon(city) {
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + OPEN_WEATHER_API_KEY;
+    // Get openweatherapi weather data
     fetch(queryURL)
         .then(function (response) {
             return response.json();
         })
         .then(function (data){
+            // Assign values to be used for display
             var lat = data.coord.lat;
             var long = data.coord.lon;
             var date = M.format("M[/]D[/]YYYY");
             var icon = ("http://openweathermap.org/img/wn/" + data.weather[0].icon + "@2x.png");
+            // Display fetched info to appropriate element
             CITY_NAME.textContent = (data.name + " (" + date + ")");
             CITY_ICON.classList.remove("hidden");
             CITY_ICON.src = (icon);
             fetchWeather(lat, long);
-            createRecentSearchButton();
+            createRecentSearchButton(CITY_SEARCH_INPUT.value);
         })
-};
+}
 
-function createRecentSearchButton() {
+// Create a button for recent searches using the provided city name
+function createRecentSearchButton(city) {
+    // Format search or else there will be issues with cites with spaces
+    var formattedSearch = city.replace(/ /g,"-");
     // If button already exists do nothing, otherwise create button
-    if(document.querySelector("." + CITY_SEARCH_INPUT.value)) {
+    if(document.querySelector("." + formattedSearch)) {
     } else {
-    var div = document.createElement("div");
-    var btn = document.createElement("button");
-    div.classList.add("row");
-    btn.textContent = CITY_SEARCH_INPUT.value;
-    btn.classList.add("recent-search-btn", CITY_SEARCH_INPUT.value);
-    div.appendChild(btn);
-    btn.addEventListener("click", (e) => {
-        CITY_SEARCH_INPUT.value = e.target.innerHTML;
-        fetchLatLon(e.target.innerHTML);
-    });
-    RECENT_SEARCHES.appendChild(div);
-    localStorage[CITY_SEARCH_INPUT.value] = CITY_SEARCH_INPUT.value;
-    };
-};
 
+        // Create necessary elements
+        var div = document.createElement("div");
+        var btn = document.createElement("button");
+        // Assign necessary classes
+        div.classList.add("row");
+        btn.textContent = city;
+        btn.classList.add("recent-search-btn", formattedSearch);
+        // Add button to newly created div
+        div.appendChild(btn);
+        // Add event listener to button to search city again when clicked
+        btn.addEventListener("click", (e) => {
+            CITY_SEARCH_INPUT.value = e.target.innerHTML;
+            fetchLatLon(e.target.innerHTML);
+        });
+        RECENT_SEARCHES.appendChild(div);
+        // Add city name to localStorage
+        localStorage[formattedSearch] = formattedSearch;
+        }
+}
+
+// Display forecast for the next five days
 function createFiveDayForecast(date, icon, temp, wind, humidity) {
+
+    // Create all necessary elements
     var colDiv = document.createElement("div");
     var rowDivDate = document.createElement("div");
     var rowDivIcon = document.createElement("div");
@@ -102,6 +119,7 @@ function createFiveDayForecast(date, icon, temp, wind, humidity) {
     var rowDivWind = document.createElement("div");
     var rowDivHumidity = document.createElement("div");
 
+    // Add necessary classes to each element
     colDiv.classList.add("col", "five-day-item");
     rowDivDate.classList.add("row", "pl-1", "pt-1");
     rowDivIcon.classList.add("row", "pl-1");
@@ -110,12 +128,14 @@ function createFiveDayForecast(date, icon, temp, wind, humidity) {
     rowDivWind.classList.add("row", "pl-1");
     rowDivHumidity.classList.add("row", "pl-1");
 
+    // Assign expected values to each element
     rowDivDate.textContent = (date);
     rowDivIconImage.src = (icon);
     rowDivTemp.textContent = ("Temp: " + temp);
     rowDivWind.textContent = ("Wind: " + wind);
     rowDivHumidity.textContent = ("Humidity: " + humidity);
 
+    // Add each element to be displayed in container
     colDiv.appendChild(rowDivDate);
     colDiv.appendChild(rowDivIcon);
     rowDivIcon.appendChild(rowDivIconImage);
@@ -123,11 +143,34 @@ function createFiveDayForecast(date, icon, temp, wind, humidity) {
     colDiv.appendChild(rowDivWind);
     colDiv.appendChild(rowDivHumidity);
 
+    // Add main element to 5-Day Forecast container for display
     FIVE_DAY_CONTAINER.appendChild(colDiv);
-};
+}
 
+// Removes all children from a parent element
 function removeChildren(parent){
     while (parent.lastChild) {
         parent.removeChild(parent.lastChild);
     }
-};
+}
+
+// Return all localStorage values
+function getAllLocalStorage() {
+    var values = [],
+        keys = Object.keys(localStorage),
+        i = keys.length;
+    while ( i-- ) {
+        values.push( localStorage.getItem(keys[i]) );
+    }
+    return values;
+}
+
+// Display recent searches by using localStorage whenever app is run
+function loadRecentSearches() {
+    var recentSearches = getAllLocalStorage();
+    recentSearches.forEach( e => {
+        var formattedElement = e.replace(/-/g," ")
+        createRecentSearchButton(formattedElement);
+    });
+}
+loadRecentSearches();
