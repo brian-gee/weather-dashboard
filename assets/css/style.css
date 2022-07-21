@@ -80,3 +80,21 @@
 .five-day-icon {
     width: 50px;
 }
+
+.favorable {
+    background-color: green;
+    border-radius: 10px;
+    padding: 5px 10px 0 10px;
+}
+
+.moderate {
+    background-color: yellow;
+    border-radius: 10px;
+    padding: 5px 10px 0 10px;
+}
+
+.severe {
+    background-color: red;
+    border-radius: 10px;
+    padding: 5px 10px 0 10px;
+}

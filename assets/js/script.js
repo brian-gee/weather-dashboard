@@ -39,7 +39,18 @@ function fetchWeather(lat, lon) {
             TEMP.textContent = ("Temp: " + data.current.temp + "°F");
             WIND.textContent = ("Wind: " + data.current.wind_speed + " MPH");
             HUMIDITY.textContent = ("Humidity: " + data.current.humidity + "%")
-            UV_INDEX.textContent = ("UV Index: " + data.current.uvi)
+            UV_INDEX.textContent = (data.current.uvi);
+            // Add colors to uv index depending on level
+            if(data.current.uvi <= 2){
+                UV_INDEX.className = ""
+                UV_INDEX.classList.add("favorable");
+            } else if(data.current.uvi >= 2 && data.current.uvi <= 5) {
+                UV_INDEX.className = ""
+                UV_INDEX.classList.add("moderate");
+            } else {
+                UV_INDEX.className = ""
+                UV_INDEX.classList.add("severe");
+            }
 
             // 5-Day Forecast loop
             for(var i = 0; i < 5; i++){
