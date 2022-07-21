@@ -11,6 +11,8 @@
 
 .side-bar {
     padding: 0 2rem;
+    -ms-flex: 0 0 230px;
+    flex: 0 0 230px;
 }
 
 #recent-searches {
@@ -23,12 +25,14 @@
     margin-right: 20rem;
 }
 
-img {
-    width: 45px;
+#title-img {
+    width: 40px;
+    background-color: grey;
+    border-radius: 10px;
 }
 
-textarea {
-    resize: none;
+.hidden {
+    display: none;
 }
 
 #search-button {
@@ -38,10 +42,40 @@ textarea {
     border-style: none;
     color: #fff;
     cursor: pointer;
-    padding: 6px 129px;
+    width: 100%;
+    padding: 6px 0px;
     text-align: center;
 }
 
-#search-button {
+#search-button:hover {
     background-color: #1C84FF;
+}
+
+.recent-search-btn {
+    align-items: center;
+    background-color: grey;
+    border-radius: 10px;
+    border-style: none;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+    padding: 6px 0px;
+    text-align: center;
+    margin: 0.5rem;
+}
+
+.recent-search-btn:hover {
+    background-color: rgba(128, 128, 128, 0.9);
+}
+
+.five-day-item {
+    margin-bottom: 1rem;
+    margin-left: 1rem;
+    width: 20%;
+    background-color: grey;
+    color: white;
+}
+
+.five-day-icon {
+    width: 50px;
 }
