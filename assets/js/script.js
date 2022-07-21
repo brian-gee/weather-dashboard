@@ -15,15 +15,19 @@ const M = moment();
 // Event listeners for search button and return key in search input
 CITY_SEARCH_BUTTON.addEventListener("click", () => {
     fetchLatLon(CITY_SEARCH_INPUT.value);
-})
+});
 CITY_SEARCH_INPUT.addEventListener("keyup", (e) => {
     if (e.keyCode == 13) {
         CITY_SEARCH_BUTTON.click();
     }
-})
+});
 
 // Get json response from onecallapi
 function fetchWeather(lat, lon) {
+    // Remove existing 5-Day Forecast
+    if (FIVE_DAY_CONTAINER.children.length > 0) {
+        removeChildren(FIVE_DAY_CONTAINER);
+    }
     var queryURL = "https://api.openweathermap.org/data/2.5/onecall?units=imperial&exclude=hourly,minutely&lat=" + lat + "&lon=" + lon + "&appid=" + OPEN_WEATHER_API_KEY;
     fetch(queryURL)
         .then(function (response) {
@@ -48,7 +52,7 @@ function fetchWeather(lat, lon) {
                     (day.humidity + "%"));
             }
         })
-}
+};
 
 // Get the cities lat and lon to use with onecallapi
 function fetchLatLon(city) {
@@ -67,21 +71,27 @@ function fetchLatLon(city) {
             CITY_ICON.src = (icon);
             fetchWeather(lat, long);
             createRecentSearchButton();
-
-            // console.log(data);
         })
-}
+};
 
 function createRecentSearchButton() {
+    // If button already exists do nothing, otherwise create button
+    if(document.querySelector("." + CITY_SEARCH_INPUT.value)) {
+    } else {
     var div = document.createElement("div");
     var btn = document.createElement("button");
     div.classList.add("row");
     btn.textContent = CITY_SEARCH_INPUT.value;
-    btn.classList.add("recent-search-btn");
+    btn.classList.add("recent-search-btn", CITY_SEARCH_INPUT.value);
     div.appendChild(btn);
+    btn.addEventListener("click", (e) => {
+        CITY_SEARCH_INPUT.value = e.target.innerHTML;
+        fetchLatLon(e.target.innerHTML);
+    });
     RECENT_SEARCHES.appendChild(div);
     localStorage[CITY_SEARCH_INPUT.value] = CITY_SEARCH_INPUT.value;
-}
+    };
+};
 
 function createFiveDayForecast(date, icon, temp, wind, humidity) {
     var colDiv = document.createElement("div");
@@ -114,4 +124,10 @@ function createFiveDayForecast(date, icon, temp, wind, humidity) {
     colDiv.appendChild(rowDivHumidity);
 
     FIVE_DAY_CONTAINER.appendChild(colDiv);
-}
+};
+
+function removeChildren(parent){
+    while (parent.lastChild) {
+        parent.removeChild(parent.lastChild);
+    }
+};
